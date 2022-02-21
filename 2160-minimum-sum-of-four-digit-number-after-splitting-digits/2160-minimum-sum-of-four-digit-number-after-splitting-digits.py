@@ -7,7 +7,6 @@ class Solution:
         str_num = str(num)
         new_str_num = []
         for str_element in str_num:
-            #if str_element != '0':
             new_str_num.append(str_element)
 
         n_length = len(new_str_num)
@@ -27,7 +26,6 @@ class Solution:
             for word_2 in list(permutations(word_maker, n_2)):
                 word_1_result = "".join(word_1)
                 word_2_result = "".join(word_2)
-                print(word_1_result, word_2_result)
 
                 cand_min_sum = int(word_1_result)+int(word_2_result)
                 if cand_min_sum < min_sum:
