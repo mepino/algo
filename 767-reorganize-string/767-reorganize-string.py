@@ -17,7 +17,6 @@ class Solution:
         new_s = []
 
         while s:
-            print(s)
             if len(s) == 1:
                 if new_s[-1][-1] == s[0]:
                     return ""
@@ -26,7 +25,6 @@ class Solution:
             set_s = set(s)
             s_dict = {unique_s:s.count(unique_s) for unique_s in set_s}
             s_dict_sorted = sorted(s_dict.items(), key=lambda x:x[1], reverse=True)
-            print(s_dict_sorted)
 
             try:
                 max_char_1 = s_dict_sorted[0][0]
@@ -37,7 +35,6 @@ class Solution:
                 list_s.remove(max_char_2)
 
                 s = ''.join(list_s)
-                print('new', new_s)
                 if len(s) == 0:
                     return "".join(np.reshape(new_s, -1))
             except:
