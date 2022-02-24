@@ -5,8 +5,6 @@ class Solution:
         sorted_box = boxTypes
         for n_box, unit_box in sorted_box:
             if n_box >= truckSize:
-                print('final')
-                print(truckSize)
                 unit = unit + truckSize * unit_box
                 truckSize = 0
                 break
