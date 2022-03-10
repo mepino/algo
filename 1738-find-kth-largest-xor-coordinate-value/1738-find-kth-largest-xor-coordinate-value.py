@@ -18,28 +18,50 @@
 #                 matrix_xor.append(self.XOR(source_list))
                 
 #         return sorted(matrix_xor, reverse=True)[k-1]
-
+    
+import numpy as np
 class Solution:
-    def kthLargestValue(self, A, k):
-        row, col = len(A), len(A[0])
-        dp = [[0 for _ in range(col)] for _ in range(row)]
-        dp[0][0] = A[0][0]
+    def kthLargestValue(self, matrix: List[List[int]], k: int) -> int:
+        matrix = np.array(matrix)
+        m, n = matrix.shape
         
-        for c in range(1, col):
-            dp[0][c] = A[0][c]^dp[0][c-1]
+        matrix_xor = matrix.copy()
+
+        j = 0
+        for i in range(1, m):
+            matrix_xor[i, j] = matrix[i, j] ^ matrix_xor[i-1, j]
+            
+        i = 0
+        for j in range(1, n):
+            matrix_xor[i, j] = matrix[i, j] ^ matrix_xor[i, j-1]
+            
+        for i in range(1, m):
+            for j in range(1, n):
+                matrix_xor[i, j] = matrix[i, j] ^ matrix_xor[i-1, j] ^ matrix_xor[i, j-1] ^ matrix_xor[i-1, j-1]
+                
+        return sorted(matrix_xor.reshape(-1))[-k]
+
+# class Solution:
+#     def kthLargestValue(self, A, k):
+#         row, col = len(A), len(A[0])
+#         dp = [[0 for _ in range(col)] for _ in range(row)]
+#         dp[0][0] = A[0][0]
         
-        for r in range(1, row):
-            dp[r][0] = A[r][0]^dp[r-1][0]
+#         for c in range(1, col):
+#             dp[0][c] = A[0][c]^dp[0][c-1]
         
-        for r in range(1, row):
-            for c in range(1, col):
-                dp[r][c] = dp[r][c-1]^dp[r-1][c]^dp[r-1][c-1]^A[r][c]
+#         for r in range(1, row):
+#             dp[r][0] = A[r][0]^dp[r-1][0]
         
-        array = []
-        for i in range(row):
-            for j in range(col):
-                array.append(dp[i][j])
+#         for r in range(1, row):
+#             for c in range(1, col):
+#                 dp[r][c] = dp[r][c-1]^dp[r-1][c]^dp[r-1][c-1]^A[r][c]
         
-        if len(array) < k: return 0
-        array.sort(reverse=True)
-        return array[k-1]
+#         array = []
+#         for i in range(row):
+#             for j in range(col):
+#                 array.append(dp[i][j])
+        
+#         if len(array) < k: return 0
+#         array.sort(reverse=True)
+#         return array[k-1]
